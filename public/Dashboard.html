@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Hospital Bed Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4c",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+    <nav
+        class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10 dark:border-primary/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-white">
+                        <span class="material-symbols-outlined text-2xl">local_hospital</span>
+                    </div>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Hospital Bed Management
+                    </h1>
+                </div>
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                        <input id="search-input"
+                            class="w-full bg-slate-100 dark:bg-white/5 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary"
+                            placeholder="Search patients, wards, or staff..." type="text" />
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button
+                        class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <div class="h-8 w-[1px] bg-slate-200 dark:bg-white/10 mx-2"></div>
+                    <button id="user-profile-btn"
+                        class="flex items-center gap-2 p-1 pr-3 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors border border-transparent">
+                        <div
+                            class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+                            <img alt="User Profile" class="w-full h-full object-cover"
+                                data-alt="Professional profile photo of a medical doctor"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5HPgirCrPmbzEJeicm5OJsUdwzAnqCIv6Qh6ZYVTfaBRSw9VewWqcEZiEmBurM2Uh4ssDpRgwYZ6QGHagcNjhgzpFqReykTVrTVszi5qNj3EIWfBKpX482_8PpptJB1DW1EfeI8OyOuMQa-sy9OV0d8dekTrvTB0wYRaMGYtGYhbVkErlzz4Nsot11oJLb7F6iaOqhY7iVkdmSCQCwHltYskg5KegsIcTZn9DAEOYgG4M3XbPGiy6mO-p8OXJyzM_5QeZh8TMtYYt" />
+                        </div>
+                        <span class="text-sm font-semibold hidden lg:block" id="user-name-display">Dr. Sarah
+                            Smith</span>
+                    </button>
+                    <button id="logout-btn"
+                        class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-colors">
+                        <span class="material-symbols-outlined">logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div
+                class="bg-white dark:bg-white/5 p-6 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow group">
+                <div class="flex justify-between items-start mb-4">
+                    <div
+                        class="p-2 bg-slate-100 dark:bg-white/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                        <span class="material-symbols-outlined text-primary">bed</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-400">TOTAL</span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Total Beds</h3>
+                <p class="text-3xl font-bold mt-1">42</p>
+                <div class="mt-2 text-xs text-slate-400 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">info</span> Capacity reached 88%
+                </div>
+            </div>
+            <div
+                class="bg-white dark:bg-white/5 p-6 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow group">
+                <div class="flex justify-between items-start mb-4">
+                    <div
+                        class="p-2 bg-green-50 dark:bg-green-500/10 rounded-lg group-hover:bg-green-100 transition-colors">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                    </div>
+                    <span
+                        class="px-2 py-1 bg-green-50 dark:bg-green-500/10 text-green-600 text-[10px] font-bold rounded">AVAILABLE</span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Available</h3>
+                <p class="text-3xl font-bold mt-1 text-green-600">15</p>
+                <div class="mt-2 w-full bg-slate-100 dark:bg-white/10 h-1.5 rounded-full">
+                    <div class="bg-green-500 h-full rounded-full" style="width: 35%"></div>
+                </div>
+            </div>
+            <div
+                class="bg-white dark:bg-white/5 p-6 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow group">
+                <div class="flex justify-between items-start mb-4">
+                    <div
+                        class="p-2 bg-blue-50 dark:bg-blue-500/10 rounded-lg group-hover:bg-blue-100 transition-colors">
+                        <span class="material-symbols-outlined text-blue-600">person_filled</span>
+                    </div>
+                    <span
+                        class="px-2 py-1 bg-blue-50 dark:bg-blue-500/10 text-blue-600 text-[10px] font-bold rounded">IN
+                        USE</span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Occupied</h3>
+                <p class="text-3xl font-bold mt-1 text-blue-600">22</p>
+                <div class="mt-2 w-full bg-slate-100 dark:bg-white/10 h-1.5 rounded-full">
+                    <div class="bg-blue-500 h-full rounded-full" style="width: 52%"></div>
+                </div>
+            </div>
+            <div
+                class="bg-white dark:bg-white/5 p-6 rounded-xl border border-slate-100 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow group border-red-100/50">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-red-50 dark:bg-red-500/10 rounded-lg group-hover:bg-red-100 transition-colors">
+                        <span class="material-symbols-outlined text-red-600">e911_emergency</span>
+                    </div>
+                    <span
+                        class="px-2 py-1 bg-red-50 dark:bg-red-500/10 text-red-600 text-[10px] font-bold rounded animate-pulse">CRITICAL</span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Emergency</h3>
+                <p class="text-3xl font-bold mt-1 text-red-600">05</p>
+                <div class="mt-2 w-full bg-slate-100 dark:bg-white/10 h-1.5 rounded-full">
+                    <div class="bg-red-500 h-full rounded-full" style="width: 12%"></div>
+                </div>
+            </div>
+        </section>
+        <section class="space-y-4">
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white">Floor Selection</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <button
+                    class="flex flex-col items-center justify-center p-6 bg-primary text-white rounded-xl shadow-lg shadow-primary/20 transition-all scale-105">
+                    <span class="material-symbols-outlined text-3xl mb-2">apartment</span>
+                    <span class="font-bold text-sm">Floor 1</span>
+                    <span class="text-xs opacity-80">General Ward</span>
+                </button>
+                <button
+                    class="flex flex-col items-center justify-center p-6 bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-xl hover:border-primary/50 transition-all">
+                    <span class="material-symbols-outlined text-3xl mb-2 text-primary">medical_services</span>
+                    <span class="font-bold text-sm">Floor 2</span>
+                    <span class="text-xs text-slate-500">ICU</span>
+                </button>
+                <button
+                    class="flex flex-col items-center justify-center p-6 bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-xl hover:border-primary/50 transition-all">
+                    <span class="material-symbols-outlined text-3xl mb-2 text-primary">bedroom_parent</span>
+                    <span class="font-bold text-sm">Floor 3</span>
+                    <span class="text-xs text-slate-500">Private</span>
+                </button>
+                <button
+                    class="flex flex-col items-center justify-center p-6 bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-xl hover:border-primary/50 transition-all">
+                    <span class="material-symbols-outlined text-3xl mb-2 text-primary">child_care</span>
+                    <span class="font-bold text-sm">Floor 4</span>
+                    <span class="text-xs text-slate-500">Maternity</span>
+                </button>
+                <button
+                    class="flex flex-col items-center justify-center p-6 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-xl hover:bg-red-100 dark:hover:bg-red-500/20 transition-all group">
+                    <span
+                        class="material-symbols-outlined text-3xl mb-2 text-red-600 group-hover:scale-110 transition-transform">emergency</span>
+                    <span class="font-bold text-sm text-red-600 uppercase tracking-wide">ER</span>
+                    <span class="text-xs text-red-500 font-medium">Emergency Room</span>
+                </button>
+            </div>
+        </section>
+        <section class="space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800 dark:text-white">Floor 1 Bed Layout</h2>
+                    <p class="text-sm text-slate-500">Real-time status of all patient beds in General Ward</p>
+                </div>
+                <div class="flex gap-4 text-xs font-medium">
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-3 h-3 rounded bg-white border border-slate-200"></div> Available
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-3 h-3 rounded bg-blue-500"></div> Occupied
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-3 h-3 rounded bg-red-500"></div> Emergency
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-50 dark:bg-white/5 p-8 rounded-2xl border border-slate-100 dark:border-white/10">
+                <div class="grid grid-cols-5 grid-rows-2 gap-8" id="bed-grid-container">
+                    <!-- Dynamic beds will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="max-w-7xl mx-auto px-4 py-8 mt-auto border-t border-slate-200 dark:border-white/10">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">security</span>
+                <span>HIPAA Compliant Bed Management System v2.4</span>
+            </div>
+            <div class="flex gap-6">
+                <a class="hover:text-primary transition-colors info-link" href="#" data-title="Support">Support</a>
+                <a class="hover:text-primary transition-colors info-link" href="#"
+                    data-title="Documentation">Documentation</a>
+                <a class="hover:text-primary transition-colors info-link" href="#" data-title="System Status">System
+                    Status</a>
+            </div>
+            <p>© 2026 Hospital Bed Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logout-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-sm mx-4 overflow-hidden transform scale-95 transition-transform duration-300"
+            id="logout-modal-content">
+            <div class="p-6 text-center">
+                <div
+                    class="w-16 h-16 bg-red-100 dark:bg-red-500/20 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-3xl">logout</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Ready to Leave?</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Are you sure you want to log out of the
+                    Hospital Bed Management System?</p>
+                <div class="flex gap-3">
+                    <button id="cancel-logout"
+                        class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold rounded-xl transition-colors">Cancel</button>
+                    <button id="confirm-logout"
+                        class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-red-600/20">Yes,
+                        Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="info-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[80vh]"
+            id="info-modal-inner">
+            <div class="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-700">
+                <h3 id="info-modal-title"
+                    class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">info</span>
+                    <span>Title</span>
+                </h3>
+                <button id="close-info-modal"
+                    class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <p id="info-modal-body" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Content goes here.
+                </p>
+            </div>
+            <div
+                class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-right">
+                <button id="close-info-modal-btn"
+                    class="px-6 py-2 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-primary/20">Understood</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Admission Modal -->
+    <div id="admission-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]"
+            id="admission-modal-inner">
+            <div class="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-700">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">person_add</span>
+                    <span>Admit Patient</span>
+                </h3>
+                <button id="close-admission-modal"
+                    class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <form id="admission-form" class="space-y-4">
+                    <input type="hidden" id="admission-bed-id" name="bed_id">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Assigning to Bed: <strong
+                            id="admission-bed-display" class="text-slate-900 dark:text-white"></strong></p>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+                            for="patient-name">Full Name</label>
+                        <input
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
+                            id="patient-name" name="name" placeholder="E.g. John Doe" required type="text" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+                            for="patient-age">Age</label>
+                        <input
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
+                            id="patient-age" name="age" placeholder="E.g. 45" required type="number" min="0" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
+                            for="patient-disease">Condition / Reason</label>
+                        <input
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
+                            id="patient-disease" name="disease" placeholder="E.g. Pneumonia" required type="text" />
+                    </div>
+                    <div id="emergency-proof-container" class="hidden">
+                        <label class="block text-sm font-semibold text-red-700 dark:text-red-400 mb-1.5"
+                            for="emergency-proof">Emergency Proof Document (Optional)</label>
+                        <input
+                            class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition-all dark:file:bg-red-500/10 dark:file:text-red-400 dark:hover:file:bg-red-500/20"
+                            id="emergency-proof" name="emergency_proof" type="file"
+                            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" />
+                    </div>
+                </form>
+            </div>
+            <div
+                class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 flex justify-end gap-3">
+                <button id="cancel-admission-btn" type="button"
+                    class="px-6 py-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold rounded-lg transition-colors">Cancel</button>
+                <button id="submit-admission-btn" type="button"
+                    class="px-6 py-2 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-primary/20 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">check_circle</span> Admit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Discharge & Details Modal -->
+    <div id="discharge-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]"
+            id="discharge-modal-inner">
+            <div class="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-700">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-500">patient_list</span>
+                    <span>Patient Details</span>
+                </h3>
+                <button id="close-discharge-modal"
+                    class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4">
+                <div id="discharge-loading" class="text-center py-8 hidden">
+                    <span class="material-symbols-outlined animate-spin text-4xl text-primary">progress_activity</span>
+                    <p class="text-sm text-slate-500 mt-2">Loading patient data...</p>
+                </div>
+                <div id="discharge-details" class="space-y-4">
+                    <div
+                        class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center font-bold text-xl"
+                            id="patient-initials">
+                            --
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white" id="detail-name">Loading...</h4>
+                            <p class="text-xs text-slate-500" id="detail-bed">Bed: --</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div
+                            class="p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                            <span
+                                class="block text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Age</span>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300"
+                                id="detail-age">--</span>
+                        </div>
+                        <div
+                            class="p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                            <span
+                                class="block text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Admitted</span>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300"
+                                id="detail-date">--</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <span
+                            class="block text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Condition</span>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300"
+                            id="detail-disease">--</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 flex justify-end gap-3">
+                <input type="hidden" id="discharge-bed-id">
+                <button id="cancel-discharge-btn" type="button"
+                    class="px-6 py-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold rounded-lg transition-colors">Close</button>
+                <button id="submit-discharge-btn" type="button"
+                    class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-red-600/20 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">exit_to_app</span> Discharge Patient
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('hospitalToken');
+            if (!token) {
+                window.location.href = '/';
+                return;
+            }
+
+            // Logout Logic
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutModal = document.getElementById('logout-modal');
+            const cancelLogoutBtn = document.getElementById('cancel-logout');
+            const confirmLogoutBtn = document.getElementById('confirm-logout');
+
+            if (logoutBtn && logoutModal) {
+                const showLogout = () => {
+                    logoutModal.classList.remove('hidden');
+                    logoutModal.classList.add('flex');
+                    setTimeout(() => {
+                        logoutModal.classList.remove('opacity-0');
+                        document.getElementById('logout-modal-content').classList.remove('scale-95');
+                    }, 10);
+                };
+
+                const hideLogout = () => {
+                    logoutModal.classList.add('opacity-0');
+                    document.getElementById('logout-modal-content').classList.add('scale-95');
+                    setTimeout(() => {
+                        logoutModal.classList.add('hidden');
+                        logoutModal.classList.remove('flex');
+                    }, 300);
+                };
+
+                logoutBtn.addEventListener('click', showLogout);
+                if (cancelLogoutBtn) cancelLogoutBtn.addEventListener('click', hideLogout);
+                logoutModal.addEventListener('click', (e) => {
+                    if (e.target === logoutModal) hideLogout();
+                });
+
+                if (confirmLogoutBtn) {
+                    confirmLogoutBtn.addEventListener('click', () => {
+                        localStorage.removeItem('hospitalToken');
+                        localStorage.removeItem('hospitalUser');
+                        window.location.href = '/';
+                    });
+                }
+            }
+
+            // Info Modal Logic
+            const infoLinks = document.querySelectorAll('.info-link');
+            const infoModal = document.getElementById('info-modal');
+            const closeInfoBtns = [document.getElementById('close-info-modal'), document.getElementById('close-info-modal-btn')];
+            const infoTitle = document.getElementById('info-modal-title');
+            const infoBody = document.getElementById('info-modal-body');
+
+            if (infoModal) {
+                const hideInfo = () => {
+                    infoModal.classList.add('opacity-0');
+                    document.getElementById('info-modal-inner').classList.add('scale-95');
+                    setTimeout(() => {
+                        infoModal.classList.add('hidden');
+                        infoModal.classList.remove('flex');
+                    }, 300);
+                };
+
+                closeInfoBtns.forEach(btn => btn?.addEventListener('click', hideInfo));
+                infoModal.addEventListener('click', (e) => {
+                    if (e.target === infoModal) hideInfo();
+                });
+
+                infoLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const title = link.getAttribute('data-title') || link.textContent.trim();
+                        if (infoTitle && infoTitle.lastElementChild) {
+                            infoTitle.lastElementChild.textContent = title;
+                        }
+
+                        let content = 'Information currently unavailable.';
+                        if (title === 'Support' || title === 'Need assistance?') {
+                            content = 'For technical support, please contact the IT Helpdesk at ext. 4357 or email it-support@hospital.local. Support hours are 24/7 for critical systems.';
+                        } else if (title === 'Documentation') {
+                            content = 'Access the comprehensive user manual, API references, and training modules at the internal Hospital Intranet portal.';
+                        } else if (title === 'System Status') {
+                            content = 'All systems operational. Main database latency: 12ms. Last backup completed successfully at 03:00 AM local time.';
+                        } else if (title === 'Privacy Policy') {
+                            content = 'This system complies with HIPAA regulations. All user activity is securely logged and monitored for compliance.';
+                        } else if (title === 'Terms of Service') {
+                            content = 'Usage of this system is restricted to authorized hospital personnel only. Unauthorized access is strictly prohibited.';
+                        } else if (title === 'Help Center') {
+                            content = 'Visit the internal Help Center portal to view FAQs, tutorial videos, and administrative guides.';
+                        }
+
+                        if (infoBody) infoBody.textContent = content;
+
+                        infoModal.classList.remove('hidden');
+                        infoModal.classList.add('flex');
+                        setTimeout(() => {
+                            infoModal.classList.remove('opacity-0');
+                            document.getElementById('info-modal-inner').classList.remove('scale-95');
+                        }, 10);
+                    });
+                });
+            }
+
+            // Elements
+            const bedGridContainer = document.getElementById('bed-grid-container');
+            let currentFloorNum = 1; // Default floor
+
+            // Reusable fetch data function to allow auto-refresh after actions
+            const fetchDashboardData = async () => {
+                const res = await fetch('/api/beds', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        localStorage.removeItem('hospitalToken');
+                        window.location.href = '/';
+                    }
+                    throw new Error('Failed to fetch beds');
+                }
+
+                return await res.json();
+            };
+
+            // Setup Admission/Discharge Modal Interactions
+            const setupActionModals = () => {
+                // Admission Modal Logic
+                const admModal = document.getElementById('admission-modal');
+                const closeAdm = () => {
+                    admModal.classList.add('opacity-0');
+                    document.getElementById('admission-modal-inner').classList.add('scale-95');
+                    setTimeout(() => {
+                        admModal.classList.add('hidden');
+                        admModal.classList.remove('flex');
+                    }, 300);
+                };
+                document.getElementById('close-admission-modal')?.addEventListener('click', closeAdm);
+                document.getElementById('cancel-admission-btn')?.addEventListener('click', closeAdm);
+
+                document.getElementById('submit-admission-btn')?.addEventListener('click', async (e) => {
+                    const btn = e.currentTarget;
+                    const form = document.getElementById('admission-form');
+                    if (!form.checkValidity()) {
+                        form.reportValidity();
+                        return;
+                    }
+
+                    btn.disabled = true;
+                    btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-sm">progress_activity</span> Processing...`;
+
+                    const formData = new FormData(form);
+                    const bedNumText = document.getElementById('admission-bed-display').textContent;
+                    formData.append('is_emergency', bedNumText.startsWith('EM'));
+
+                    try {
+                        const res = await fetch('/api/patients/admit', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: formData
+                        });
+
+                        if (res.ok) {
+                            closeAdm();
+                            data = await fetchDashboardData();
+                            updateDashboardUI(data);
+                            renderBedsForFloor(currentFloorNum);
+                        } else {
+                            const err = await res.json();
+                            alert(err.message || 'Admission failed');
+                        }
+                    } catch (error) {
+                        console.error('Admission Error:', error);
+                        alert('Network Error. Please try again.');
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = `<span class="material-symbols-outlined text-sm">check_circle</span> Admit`;
+                    }
+                });
+
+                // Discharge Modal Logic
+                const disModal = document.getElementById('discharge-modal');
+                const closeDis = () => {
+                    disModal.classList.add('opacity-0');
+                    document.getElementById('discharge-modal-inner').classList.add('scale-95');
+                    setTimeout(() => {
+                        disModal.classList.add('hidden');
+                        disModal.classList.remove('flex');
+                    }, 300);
+                };
+                document.getElementById('close-discharge-modal')?.addEventListener('click', closeDis);
+                document.getElementById('cancel-discharge-btn')?.addEventListener('click', closeDis);
+
+                document.getElementById('submit-discharge-btn')?.addEventListener('click', async (e) => {
+                    const btn = e.currentTarget;
+                    btn.disabled = true;
+                    btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-sm">progress_activity</span> Processing...`;
+
+                    const bedId = document.getElementById('discharge-bed-id').value;
+
+                    try {
+                        const res = await fetch('/api/patients/discharge', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify({ bed_id: bedId })
+                        });
+
+                        if (res.ok) {
+                            closeDis();
+                            data = await fetchDashboardData();
+                            updateDashboardUI(data);
+                            renderBedsForFloor(currentFloorNum);
+                        } else {
+                            const err = await res.json();
+                            alert(err.message || 'Discharge failed');
+                        }
+                    } catch (error) {
+                        console.error('Discharge Error:', error);
+                        alert('Network Error. Please try again.');
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = `<span class="material-symbols-outlined text-sm">exit_to_app</span> Discharge Patient`;
+                    }
+                });
+            };
+
+            setupActionModals();
+
+            // Select elements without jQuery :contains
+            const statCards = document.querySelectorAll('h3');
+            let totalEl, availEl, occEl, emergEl;
+            statCards.forEach(h3 => {
+                if (h3.textContent.includes('Total Beds')) totalEl = h3.nextElementSibling;
+                if (h3.textContent.includes('Available')) availEl = h3.nextElementSibling;
+                if (h3.textContent.includes('Occupied')) occEl = h3.nextElementSibling;
+                if (h3.textContent.includes('Emergency')) emergEl = h3.nextElementSibling;
+            });
+
+            let data;
+            const updateDashboardUI = (dashboardData) => {
+                data = dashboardData;
+                // Update User Profile Name
+                const userDataStr = localStorage.getItem('hospitalUser');
+                if (userDataStr) {
+                    try {
+                        const user = JSON.parse(userDataStr);
+                        const nameEl = document.getElementById('user-name-display');
+                        if (nameEl && user.name) {
+                            nameEl.textContent = user.name;
+                        }
+                    } catch (e) { }
+                }
+
+                // Update Analytics Cards
+                if (data.summary) {
+                    if (totalEl) totalEl.textContent = data.summary.totalBeds;
+                    if (availEl) availEl.textContent = data.summary.availableBeds;
+                    if (occEl) occEl.textContent = data.summary.occupiedBeds;
+                    if (emergEl) emergEl.textContent = data.summary.emergencyBeds;
+
+                    // Update progress bars
+                    const progressBars = document.querySelectorAll('.h-1\\.5 > div'); // Escaped dot
+                    if (progressBars.length >= 3 && data.summary.totalBeds > 0) {
+                        progressBars[0].style.width = `${(data.summary.availableBeds / data.summary.totalBeds) * 100}%`;
+                        progressBars[1].style.width = `${(data.summary.occupiedBeds / data.summary.totalBeds) * 100}%`;
+                        progressBars[2].style.width = `${(data.summary.emergencyBeds / data.summary.totalBeds) * 100}%`;
+                    }
+
+                    // Low Availability Alert (Less than 5 available beds)
+                    const existingAlert = document.getElementById('low-capacity-alert');
+                    if (data.summary.availableBeds < 5) {
+                        if (!existingAlert) {
+                            const alertHtml = `
+                                <div id="low-capacity-alert" class="bg-red-500 text-white px-4 py-3 rounded-xl mb-6 flex items-center justify-between shadow-lg shadow-red-500/20 animate-pulse">
+                                    <div class="flex items-center gap-3">
+                                        <span class="material-symbols-outlined">warning</span>
+                                        <strong>CRITICAL CAPACITY:</strong> Only ${data.summary.availableBeds} beds available hospital-wide.
+                                    </div>
+                                    <button onclick="this.parentElement.remove()" class="text-white/80 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+                                </div>
+                            `;
+                            document.querySelector('main').insertAdjacentHTML('afterbegin', alertHtml);
+                        } else {
+                            existingAlert.querySelector('strong').nextSibling.textContent = ` Only ${data.summary.availableBeds} beds available hospital-wide.`;
+                        }
+                    } else if (existingAlert) {
+                        existingAlert.remove();
+                    }
+                }
+            };
+
+            // Render Bed Grid Function
+            const renderBedsForFloor = (floorNum, forceBeds = null) => {
+                if (!data || !bedGridContainer) return;
+
+                let floorBeds = [];
+                if (forceBeds) {
+                    floorBeds = forceBeds;
+                } else if (data.beds) {
+                    floorBeds = floorNum === 'ER'
+                        ? data.beds.filter(b => b.ward_type === 'Emergency')
+                        : data.beds.filter(b => b.floor_number === parseInt(floorNum));
+                }
+
+                bedGridContainer.innerHTML = ''; // Clear existing
+
+                // Update Headers
+                const layoutHeader = document.querySelector('h2').parentElement.parentElement.querySelector('h2'); // Fallback finder
+
+                const sections = document.querySelectorAll('section');
+                let targetSection;
+                sections.forEach(sec => {
+                    if (sec.querySelector('h2') && sec.querySelector('h2').textContent.includes('Bed Layout')) {
+                        targetSection = sec;
+                    }
+                });
+
+                if (targetSection) {
+                    const h2 = targetSection.querySelector('h2');
+                    const p = targetSection.querySelector('p');
+
+                    if (forceBeds) {
+                        if (h2) h2.textContent = `Search Results`;
+                        if (p) p.textContent = `Found ${forceBeds.length} matching beds`;
+                    } else if (floorNum === 'ER') {
+                        if (h2) h2.textContent = `Emergency Room Bed Layout`;
+                        if (p) p.textContent = `Real-time status of all patient beds in ER`;
+                    } else {
+                        if (h2) h2.textContent = `Floor ${floorNum} Bed Layout`;
+                        const wardNames = { 1: 'General Ward', 2: 'ICU', 3: 'Private', 4: 'Maternity' };
+                        if (p) p.textContent = `Real-time status of all patient beds in ${wardNames[floorNum] || 'Ward'}`;
+                    }
+                }
+
+                floorBeds.forEach(bed => {
+                    const bedDiv = document.createElement('div');
+
+                    let baseClasses = "aspect-[4/3] rounded-xl shadow-sm flex flex-col items-center justify-center gap-2 transition-all cursor-pointer relative group";
+                    let iconClass = "material-symbols-outlined text-3xl";
+                    let iconName = "single_bed";
+                    let textClass = "text-xs font-bold";
+                    let extraHtml = "";
+
+                    if (bed.status === 'available') {
+                        baseClasses += " bg-white dark:bg-white/10 border border-slate-200 dark:border-white/20 hover:border-primary";
+                        iconClass += " text-slate-400";
+                        textClass += " text-slate-600 dark:text-slate-300";
+                    } else if (bed.status === 'occupied') {
+                        baseClasses += " bg-blue-500 border border-blue-600 shadow-lg";
+                        iconClass += " text-white";
+                        iconName = "patient_list";
+                        textClass += " text-white/90";
+                        extraHtml = `<div class="absolute -top-2 -right-2 bg-blue-800 text-[10px] text-white px-2 py-0.5 rounded-full border border-blue-400">IN USE</div>`;
+                    } else if (bed.status === 'emergency') {
+                        baseClasses += " bg-red-500 border border-red-600 shadow-lg animate-pulse";
+                        iconClass += " text-white";
+                        iconName = "warning";
+                        textClass += " text-white/90";
+                        extraHtml = `<div class="absolute -top-2 -right-2 bg-red-900 text-[10px] text-white px-2 py-0.5 rounded-full border border-red-400">EMERGENCY</div>`;
+                    }
+
+                    let iconHtml = `<span class="${iconClass}">${iconName}</span>`;
+                    if ((bed.status === 'occupied' || bed.status === 'emergency') && bed.patient_name) {
+                        const initials = bed.patient_name.substring(0, 2).toUpperCase();
+                        iconHtml = `<div class="w-10 h-10 rounded-full bg-white/20 flex flex-shrink-0 items-center justify-center font-bold text-white mb-1 shadow-sm border border-white/20">${initials}</div>`;
+                    }
+
+                    bedDiv.className = baseClasses;
+                    bedDiv.innerHTML = `
+                        ${iconHtml}
+                        <span class="${textClass}">${bed.bed_number}</span>
+                        ${extraHtml}
+                    `;
+                    bedDiv.addEventListener('click', async () => {
+                        if (bed.status === 'available') {
+                            document.getElementById('admission-form').reset();
+                            document.getElementById('admission-bed-id').value = bed.id;
+                            document.getElementById('admission-bed-display').textContent = bed.bed_number;
+
+                            const proofContainer = document.getElementById('emergency-proof-container');
+                            if (proofContainer) {
+                                if (bed.ward_type === 'Emergency') {
+                                    proofContainer.classList.remove('hidden');
+                                } else {
+                                    proofContainer.classList.add('hidden');
+                                }
+                            }
+
+                            const modal = document.getElementById('admission-modal');
+                            modal.classList.remove('hidden');
+                            modal.classList.add('flex');
+                            setTimeout(() => {
+                                modal.classList.remove('opacity-0');
+                                document.getElementById('admission-modal-inner').classList.remove('scale-95');
+                            }, 10);
+                        } else if (bed.status === 'occupied' || bed.status === 'emergency') {
+                            const modal = document.getElementById('discharge-modal');
+                            const loading = document.getElementById('discharge-loading');
+                            const details = document.getElementById('discharge-details');
+
+                            document.getElementById('discharge-bed-id').value = bed.id;
+                            document.getElementById('patient-initials').textContent = '--';
+                            document.getElementById('detail-name').textContent = 'Loading...';
+                            document.getElementById('detail-bed').textContent = `Bed: ${bed.bed_number} `;
+                            document.getElementById('detail-age').textContent = '--';
+                            document.getElementById('detail-date').textContent = '--';
+                            document.getElementById('detail-disease').textContent = '--';
+                            document.getElementById('submit-discharge-btn').disabled = true;
+
+                            loading.classList.remove('hidden');
+                            details.classList.add('hidden');
+
+                            modal.classList.remove('hidden');
+                            modal.classList.add('flex');
+                            setTimeout(() => {
+                                modal.classList.remove('opacity-0');
+                                document.getElementById('discharge-modal-inner').classList.remove('scale-95');
+                            }, 10);
+
+                            try {
+                                const pRes = await fetch(`/api/patients/bed/${bed.id}`, {
+                                    headers: { 'Authorization': `Bearer ${token}` }
+                                });
+                                if (pRes.ok) {
+                                    const patient = await pRes.json();
+                                    document.getElementById('patient-initials').textContent = patient.name.substring(0, 2).toUpperCase();
+                                    document.getElementById('detail-name').textContent = patient.name;
+                                    document.getElementById('detail-age').textContent = patient.age;
+                                    document.getElementById('detail-date').textContent = new Date(patient.admission_date).toLocaleDateString();
+                                    document.getElementById('detail-disease').textContent = patient.disease;
+                                    document.getElementById('submit-discharge-btn').disabled = false;
+                                } else {
+                                    document.getElementById('detail-name').textContent = 'No active patient found';
+                                    document.getElementById('patient-initials').textContent = '?';
+                                }
+                            } catch (e) {
+                                console.error(e);
+                                document.getElementById('detail-name').textContent = 'Error loading data';
+                            } finally {
+                                loading.classList.add('hidden');
+                                details.classList.remove('hidden');
+                            }
+                        }
+                    });
+
+                    bedGridContainer.appendChild(bedDiv);
+                });
+            };
+
+            try {
+                data = await fetchDashboardData();
+                updateDashboardUI(data);
+
+                // Setup Search Listener
+                const searchInput = document.getElementById('search-input');
+                let searchTimeout;
+                if (searchInput) {
+                    searchInput.addEventListener('input', (e) => {
+                        clearTimeout(searchTimeout);
+                        searchTimeout = setTimeout(async () => {
+                            const query = e.target.value.trim();
+                            if (!query) {
+                                // Reset to current floor if search cleared
+                                renderBedsForFloor(currentFloorNum);
+                                return;
+                            }
+
+                            try {
+                                const res = await fetch(`/api/beds/search?q=${encodeURIComponent(query)}`, {
+                                    headers: { 'Authorization': `Bearer ${token}` }
+                                });
+                                const searchData = await res.json();
+                                if (searchData.success) {
+                                    renderBedsForFloor(null, searchData.beds);
+
+                                    // Remove highlight from floor buttons during search
+                                    const floorSection = Array.from(document.querySelectorAll('section')).find(s => s.querySelector('h2')?.textContent === 'Floor Selection');
+                                    if (floorSection) {
+                                        floorSection.querySelectorAll('button').forEach(b => {
+                                            b.classList.remove('bg-primary', 'text-white', 'scale-105', 'shadow-primary/20');
+                                            if (!b.classList.contains('bg-red-50') && !b.classList.contains('dark:bg-red-500/10')) {
+                                                b.classList.add('bg-white', 'dark:bg-white/5');
+                                                const icon = b.querySelector('.material-symbols-outlined');
+                                                if (icon) {
+                                                    icon.classList.remove('text-white');
+                                                    icon.classList.add('text-primary');
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            } catch (err) {
+                                console.error('Search error', err);
+                            }
+                        }, 300); // 300ms debounce
+                    });
+                }
+
+                // Add click listeners to Floor Selection buttons
+                const floorSection = Array.from(document.querySelectorAll('section')).find(s => s.querySelector('h2')?.textContent === 'Floor Selection');
+                if (floorSection) {
+                    const floorButtons = floorSection.querySelectorAll('button');
+                    floorButtons.forEach((btn, index) => {
+                        btn.addEventListener('click', () => {
+                            // Remove highlight from all
+                            floorButtons.forEach(b => {
+                                b.classList.remove('bg-primary', 'text-white', 'scale-105', 'shadow-primary/20');
+                                if (!b.classList.contains('bg-red-50') && !b.classList.contains('dark:bg-red-500/10')) { // don't mess up ER styling
+                                    b.classList.add('bg-white', 'dark:bg-white/5');
+                                    const icon = b.querySelector('.material-symbols-outlined');
+                                    if (icon) {
+                                        icon.classList.remove('text-white');
+                                        icon.classList.add('text-primary');
+                                    }
+                                }
+                            });
+
+                            // Add highlight to clicked
+                            if (!btn.classList.contains('bg-red-50') && !btn.classList.contains('dark:bg-red-500/10')) {
+                                btn.classList.remove('bg-white', 'dark:bg-white/5');
+                                btn.classList.add('bg-primary', 'text-white', 'scale-105', 'shadow-primary/20');
+                                const icon = btn.querySelector('.material-symbols-outlined');
+                                if (icon) {
+                                    icon.classList.remove('text-primary');
+                                    icon.classList.add('text-white');
+                                }
+                            }
+
+                            // Determine floor num (1, 2, 3, 4, or 'ER')
+                            currentFloorNum = index === 4 ? 'ER' : (index + 1);
+                            renderBedsForFloor(currentFloorNum);
+                        });
+                    });
+                }
+
+                // Initial render for Floor 1
+                renderBedsForFloor(1);
+
+            } catch (error) {
+                console.error("Dashboard error:", error);
+                // Handle error gracefully in real app
+            }
+        });
+    </script>
+</body>
+
+</html>

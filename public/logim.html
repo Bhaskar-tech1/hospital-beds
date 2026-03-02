@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4cae4c",
+                        "background-light": "#f6f7f6",
+                        "background-dark": "#151d15",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <title>Hospital Bed Management</title>
+</head>
+
+<body
+    class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+    <!-- Top Navigation Bar Component -->
+    <header
+        class="w-full flex items-center justify-between px-6 py-4 lg:px-12 bg-white/50 dark:bg-background-dark/50 backdrop-blur-md border-b border-primary/10 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="bg-primary p-2 rounded-lg text-white">
+                <span class="material-symbols-outlined text-2xl">medical_services</span>
+            </div>
+            <h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold leading-tight tracking-tight">Hospital Bed
+                Management</h2>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="text-sm font-medium text-slate-600 dark:text-slate-400 hidden sm:block">Need assistance?</span>
+            <button
+                class="bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors info-link"
+                data-title="Support">
+                Support
+            </button>
+        </div>
+    </header>
+    <main class="flex-1 flex items-center justify-center p-6 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+            <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"></path>
+                    </pattern>
+                </defs>
+                <rect fill="url(#grid)" height="100%" width="100%"></rect>
+            </svg>
+        </div>
+        <!-- Subtle Medical Illustration Background -->
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="w-full max-w-md z-10">
+            <!-- Glassmorphism Login Card -->
+            <div
+                class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800/20 rounded-xl p-8 shadow-2xl shadow-primary/5">
+                <div class="mb-8 text-center">
+                    <h1 class="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Welcome back</h1>
+                    <p class="text-slate-500 dark:text-slate-400 mt-2">Access your secure healthcare dashboard</p>
+                </div>
+                <form class="space-y-6">
+                    <!-- Email Input -->
+                    <div class="space-y-2">
+                        <label class="text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1">Email
+                            Address</label>
+                        <div class="relative group">
+                            <div
+                                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-xl">alternate_email</span>
+                            </div>
+                            <input
+                                class="w-full pl-11 pr-4 py-3 bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400"
+                                placeholder="doctor@hospital.com" type="email" />
+                        </div>
+                    </div>
+                    <!-- Password Input -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center ml-1">
+                            <label class="text-slate-700 dark:text-slate-300 text-sm font-semibold">Password</label>
+                            <a class="text-xs text-primary font-bold hover:underline" href="#">Forgot password?</a>
+                        </div>
+                        <div class="relative group">
+                            <div
+                                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-xl">lock_open</span>
+                            </div>
+                            <input
+                                class="w-full pl-11 pr-12 py-3 bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400"
+                                placeholder="••••••••" type="password" />
+                            <button
+                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                                type="button">
+                                <span class="material-symbols-outlined text-xl">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Remember Me -->
+                    <div class="flex items-center gap-3 ml-1">
+                        <input
+                            class="w-4 h-4 rounded text-primary focus:ring-primary border-slate-300 dark:border-slate-600 dark:bg-slate-800 transition-all cursor-pointer"
+                            id="remember" type="checkbox" />
+                        <label class="text-sm text-slate-600 dark:text-slate-400 cursor-pointer" for="remember">Keep me
+                            signed in for 30 days</label>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="space-y-4 pt-4">
+                        <button
+                            class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2"
+                            type="submit">
+                            <span>Sign In</span>
+                            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                        </button>
+                        <div class="relative flex items-center py-2">
+                            <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+                            <span
+                                class="flex-shrink mx-4 text-slate-400 text-xs font-semibold uppercase tracking-widest">New
+                                to Portal?</span>
+                            <div class="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+                        </div>
+                        <button
+                            class="w-full bg-white dark:bg-slate-800 border-2 border-primary/30 hover:border-primary text-slate-900 dark:text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2"
+                            type="button">
+                            <span class="material-symbols-outlined text-primary">person_add</span>
+                            <span>Create Account</span>
+                        </button>
+                    </div>
+                </form>
+                <!-- Medical Trust Badges -->
+                <div
+                    class="mt-8 flex justify-center items-center gap-6 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+                    <span class="material-symbols-outlined text-3xl" title="HIPAA Compliant">security</span>
+                    <span class="material-symbols-outlined text-3xl" title="Verified Medical Provider">verified</span>
+                    <span class="material-symbols-outlined text-3xl" title="Encrypted Data">enhanced_encryption</span>
+                </div>
+            </div>
+            <!-- Footer Links -->
+            <footer class="mt-8 text-center space-x-4">
+                <a class="text-sm text-slate-500 hover:text-primary transition-colors info-link" href="#"
+                    data-title="Privacy Policy">Privacy Policy</a>
+                <span class="text-slate-300 dark:text-slate-700">•</span>
+                <a class="text-sm text-slate-500 hover:text-primary transition-colors info-link" href="#"
+                    data-title="Terms of Service">Terms of Service</a>
+                <span class="text-slate-300 dark:text-slate-700">•</span>
+                <a class="text-sm text-slate-500 hover:text-primary transition-colors info-link" href="#"
+                    data-title="Help Center">Help Center</a>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Info Modal -->
+    <div id="info-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[80vh]"
+            id="info-modal-inner">
+            <div class="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-700">
+                <h3 id="info-modal-title"
+                    class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">info</span>
+                    <span>Title</span>
+                </h3>
+                <button id="close-info-modal"
+                    class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <p id="info-modal-body" class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                    Content goes here.
+                </p>
+            </div>
+            <div
+                class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-right">
+                <button id="close-info-modal-btn"
+                    class="px-6 py-2 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-primary/20">Understood</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Graphic for Desktop -->
+    <div class="hidden lg:block fixed right-12 bottom-12 w-1/4 max-w-sm">
+        <div class="bg-primary/5 border border-primary/10 rounded-xl p-6 backdrop-blur-sm">
+            <div class="flex items-start gap-4 mb-4">
+                <div class="bg-primary/20 p-2 rounded-lg text-primary">
+                    <span class="material-symbols-outlined">health_metrics</span>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 dark:text-slate-100">Patient Safety First</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">All data is encrypted with 256-bit AES
+                        protocols to ensure your records remain private.</p>
+                </div>
+            </div>
+            <div class="w-full h-32 rounded-lg overflow-hidden relative">
+                <img alt="Hospital Lab" class="w-full h-full object-cover"
+                    data-alt="Abstract soft focus medical laboratory background"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYJ2TW9RsYnA2EBJP7tR3cbTzMZXkMH3OMzpDGHFlGuXgM4fnADjIxtR-Pv1QU-1YYtCz4-ScgKqvMd9JvBgn4YQKM_1PQnICYA02ljqEyGhFMsMHXIuUoC32BCN43kLEci28Wo7UQaxBFYAkK5HsFiqb3iq0m6o9tF7nD3g9tFP5V75oj-4maOFn59duTtJTNdNs6lwR-NIFPVyiiUAyOwdKkXdjfpcEkhnOaO8kpix2jtn-mXTo9LIfuPRr5t8GHuRwspTHXT_E0" />
+                <div class="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // UI Elements
+            const form = document.querySelector('form');
+            const pageTitle = document.querySelector('h1.text-3xl');
+            const emailInput = document.querySelector('input[type="email"]');
+            const passwordInput = document.querySelector('input[type="password"]');
+            const submitBtnText = document.querySelector('button[type="submit"] span:first-child');
+            const submitBtn = document.querySelector('button[type="submit"]');
+
+            const toggleFormBtn = Array.from(document.querySelectorAll('button[type="button"]')).find(btn => btn.textContent.includes('Create Account') || btn.textContent.includes('Sign In instead')); // Create Account button
+            const toggleFormBtnText = toggleFormBtn.querySelector('span:last-child');
+            const toggleFormBtnIcon = toggleFormBtn.querySelector('span:first-child');
+            const forgotPasswordLink = document.querySelector('a[href="#"]'); // Forgot password
+            const rememberMeSection = document.getElementById('remember').parentElement;
+
+            // Password visibility toggle
+            const togglePasswordBtn = passwordInput.parentElement.querySelector('button');
+            const passwordIcon = togglePasswordBtn?.querySelector('span.material-symbols-outlined');
+
+            if (togglePasswordBtn) {
+                togglePasswordBtn.addEventListener('click', () => {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        if (passwordIcon) passwordIcon.textContent = 'visibility_off';
+                    } else {
+                        passwordInput.type = 'password';
+                        if (passwordIcon) passwordIcon.textContent = 'visibility';
+                    }
+                });
+            }
+
+            // Dynamic Name Input container
+            const passwordSection = passwordInput.closest('.space-y-2');
+            const nameContainer = document.createElement('div');
+            nameContainer.className = 'space-y-2 hidden';
+            nameContainer.id = 'name-field-container';
+            nameContainer.innerHTML = `
+            <label class="text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1">Full Name</label>
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+                    <span class="material-symbols-outlined text-xl">person</span>
+                </div>
+                <input id="name-input" class="w-full pl-11 pr-4 py-3 bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400" placeholder="Dr. John Doe" type="text"/>
+            </div>
+        `;
+            passwordSection.parentNode.insertBefore(nameContainer, passwordSection.previousSibling); // Insert before email
+
+            const nameInput = document.getElementById('name-input');
+
+            let isLoginMode = true;
+
+            function toggleMode() {
+                isLoginMode = !isLoginMode;
+
+                if (isLoginMode) {
+                    // Switch to Sign In
+                    pageTitle.textContent = 'Welcome back';
+                    nameContainer.classList.add('hidden');
+                    nameInput.removeAttribute('required');
+                    forgotPasswordLink.classList.remove('hidden');
+                    rememberMeSection.classList.remove('hidden');
+
+                    submitBtnText.textContent = 'Sign In';
+                    toggleFormBtnText.textContent = 'Create Account';
+                    toggleFormBtnIcon.textContent = 'person_add';
+                } else {
+                    // Switch to Register
+                    pageTitle.textContent = 'Create an Account';
+                    nameContainer.classList.remove('hidden');
+                    nameInput.setAttribute('required', 'true');
+                    forgotPasswordLink.classList.add('hidden');
+                    rememberMeSection.classList.add('hidden');
+
+                    submitBtnText.textContent = 'Register';
+                    toggleFormBtnText.textContent = 'Sign In instead';
+                    toggleFormBtnIcon.textContent = 'login';
+                }
+            }
+
+            toggleFormBtn.addEventListener('click', toggleMode);
+
+            function showMessage(msg, isError = false) {
+                // Remove existing message if any
+                const existingMsg = document.getElementById('auth-message');
+                if (existingMsg) existingMsg.remove();
+
+                const msgDiv = document.createElement('div');
+                msgDiv.id = 'auth-message';
+                msgDiv.className = `p-4 mb-4 text-sm rounded-lg ${isError ? 'bg-red-50 text-red-800 dark:bg-gray-800 dark:text-red-400' : 'bg-green-50 text-green-800 dark:bg-gray-800 dark:text-green-400'}`;
+                msgDiv.textContent = msg;
+
+                form.prepend(msgDiv);
+
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    if (msgDiv.parentNode) msgDiv.remove();
+                }, 5000);
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                const name = nameInput.value;
+
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+                const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/register';
+                const payload = isLoginMode
+                    ? { email, password }
+                    : { name, email, password, role: 'staff' };
+
+                try {
+                    const res = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const text = await res.text();
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch (e) {
+                        // If it's a 404, it might return an HTML page, show a friendly error
+                        if (res.status === 404) {
+                            throw new Error('Connection error: The authentication service is currently down.');
+                        }
+                        // Otherwise try to show the actual text if it's short, or a generic message
+                        const errMsg = text && text.length < 100 ? text : 'Network error: Failed to connect to the server.';
+                        throw new Error(errMsg);
+                    }
+
+                    if (!res.ok) {
+                        throw new Error(data.message || 'Authentication failed');
+                    }
+
+                    if (isLoginMode) {
+                        // Success Login
+                        localStorage.setItem('hospitalToken', data.token);
+                        localStorage.setItem('hospitalUser', JSON.stringify(data));
+                        window.location.href = '/dashboard';
+                    } else {
+                        // Success Registration
+                        form.reset();
+                        toggleMode(); // Switch back to login
+                        showMessage('Account created successfully. Please sign in.', false);
+                    }
+                } catch (error) {
+                    showMessage(error.message, true);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                }
+            });
+
+            // Info Modal Logic
+            const infoLinks = document.querySelectorAll('.info-link');
+            const infoModal = document.getElementById('info-modal');
+            const closeInfoBtns = [document.getElementById('close-info-modal'), document.getElementById('close-info-modal-btn')];
+            const infoTitle = document.getElementById('info-modal-title');
+            const infoBody = document.getElementById('info-modal-body');
+
+            if (infoModal) {
+                const hideInfo = () => {
+                    infoModal.classList.add('opacity-0');
+                    document.getElementById('info-modal-inner').classList.add('scale-95');
+                    setTimeout(() => {
+                        infoModal.classList.add('hidden');
+                        infoModal.classList.remove('flex');
+                    }, 300);
+                };
+
+                closeInfoBtns.forEach(btn => btn?.addEventListener('click', hideInfo));
+                infoModal.addEventListener('click', (e) => {
+                    if (e.target === infoModal) hideInfo();
+                });
+
+                infoLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const title = link.getAttribute('data-title') || link.textContent.trim();
+                        if (infoTitle && infoTitle.lastElementChild) {
+                            infoTitle.lastElementChild.textContent = title;
+                        }
+
+                        let content = 'Information currently unavailable.';
+                        if (title === 'Support' || title === 'Need assistance?') {
+                            content = 'For technical support, please contact the IT Helpdesk at ext. 4357 or email it-support@hospital.local. Support hours are 24/7 for critical systems.';
+                        } else if (title === 'Privacy Policy') {
+                            content = 'This system complies with HIPAA regulations. All user activity is securely logged and monitored for compliance.';
+                        } else if (title === 'Terms of Service') {
+                            content = 'Usage of this system is restricted to authorized hospital personnel only. Unauthorized access is strictly prohibited.';
+                        } else if (title === 'Help Center') {
+                            content = 'Visit the internal Help Center portal to view FAQs, tutorial videos, and administrative guides.';
+                        }
+
+                        if (infoBody) infoBody.textContent = content;
+
+                        infoModal.classList.remove('hidden');
+                        infoModal.classList.add('flex');
+                        setTimeout(() => {
+                            infoModal.classList.remove('opacity-0');
+                            document.getElementById('info-modal-inner').classList.remove('scale-95');
+                        }, 10);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
