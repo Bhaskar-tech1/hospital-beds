@@ -3,5 +3,5 @@ services:
     name: hospital-bed-management
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: rm -rf node_modules && npm install
     startCommand: node server.js
