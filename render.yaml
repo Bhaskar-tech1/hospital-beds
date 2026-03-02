@@ -1,18 +1,8 @@
 services:
   - type: web
-    name: hospital-bed-management
-    env: node
-    plan:  starter
-    buildCommand: npm install
-    startCommand: node server.js
-    disk:
-      name: hospital-data
-      mountPath: /opt/render/project/data
-      sizeGB: 1
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: DB_PATH
-        value: /opt/render/project/data/database.sqlite
-      - key: UPLOADS_PATH
-        value: /opt/render/project/data/uploads
+      name: hospital-bed-management
+          env: node
+              plan: free
+                  buildCommand: npm install
+                      startCommand: node server.js
+                      
