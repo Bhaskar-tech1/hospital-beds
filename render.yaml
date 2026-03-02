@@ -1,8 +1,7 @@
 services:
   - type: web
-      name: hospital-bed-management
-          env: node
-              plan: free
-                  buildCommand: npm install
-                      startCommand: node server.js
-                      
+    name: hospital-bed-management
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
